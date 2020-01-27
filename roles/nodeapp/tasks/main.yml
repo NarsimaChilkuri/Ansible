@@ -1,0 +1,21 @@
+---
+- name: Pod Config Generation
+  template:
+    src: /home/narsimac/ansible/roles/nodeapp/files/node-deployment.yml.j2
+    dest: /home/vagrant/nodeapp/node-deployment.yml
+    owner: bin
+    group: wheel
+    mode: '0644'
+  tags:
+     - pod
+
+- name: Copy Source Code
+  copy: src=/home/narsimac/ansible/roles/nodeapp/files/node-service.yml dest=/home/vagrant/nodeapp/node-service.yml
+  tags:
+     - service
+
+- name: Deploy
+  shell: kubectl apply -f /home/vagrant/nodeapp/. 
+  tags:
+     - deploy
+

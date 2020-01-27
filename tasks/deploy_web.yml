@@ -1,0 +1,13 @@
+- name: Install Python Flask Dependency
+  pip:
+    name: ['flask','flask-mysql','pymysql']
+    state: latest
+
+- name: Copy Source Code
+  copy: src=app.py dest=/opt/app.py
+    
+- name: Setting Environment
+  shell: export FLASK_ENV=development
+
+- name: Start Web Server
+  shell: nohup python /opt/app.py &

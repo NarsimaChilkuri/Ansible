@@ -1,0 +1,13 @@
+---
+- name: Upgrade APT to the latest packages
+  apt: upgrade=dist
+- name: Install Python required dependencies
+  apt:
+    name: ['python','python-setuptools','python-dev','build-essential','python-pip','python-mysqldb','python-pymysql']
+    state: latest
+
+- name: Install MySQL Database
+  apt:
+    name: ['mysql-server','mysql-client']
+    state: present
+

@@ -1,0 +1,7 @@
+- name: Jinja2 template test
+  hosts: db_and_web_server1,db_and_web_server2,db_and_web_server3
+  vars:
+    message: Hello World
+  tasks:
+    - debug:
+           msg: "Message is {{ message }}"

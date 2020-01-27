@@ -1,0 +1,46 @@
+- name: Deploy a web application
+  hosts: db_and_web_server1,db_and_web_server2,db_and_web_server3
+  tasks:
+    - name: Upgrade APT to the latest packages
+      apt: upgrade=dist
+    - name: Install Python required dependencies
+      apt: 
+        name: ['python','python-setuptools','python-dev','build-essential','python-pip','python-mysqldb','python-pymysql']
+        state: latest
+      
+    - name: Install MySQL Database  
+      apt:
+        name: ['mysql-server','mysql-client']
+        state: present
+    
+    - name: Start MySQL Service
+      service:
+        name: mysql
+        state: restarted
+   
+    - name: Create Application Database
+      mysql_db:
+        name: employee_db
+        state: present
+  
+    - name: Create Database User
+      mysql_user:
+        name: db_user
+        password: Passw0rd
+        priv: '*.*:ALL'
+        state: present   
+        host: '%'
+
+    - name: Install Python Flask Dependency
+      pip:
+        name: ['flask','flask-mysql','pymysql']
+        state: latest
+
+    - name: Copy Source Code
+      copy: src=app.py dest=/opt/app.py
+    
+    - name: Setting Environment
+      shell: export FLASK_ENV=development
+
+    - name: Start Web Server
+      shell: nohup python /opt/app.py &

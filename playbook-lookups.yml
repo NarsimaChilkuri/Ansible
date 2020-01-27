@@ -1,0 +1,5 @@
+- name: Lookup Plugin test
+  hosts: db_and_web_server1,db_and_web_server2,db_and_web_server3
+  tasks:
+    - debug:
+        msg: "motd value is {{ lookup('csvfile', 'Li file=/tmp/ansible.csv delimiter=,') }}"

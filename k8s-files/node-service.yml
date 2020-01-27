@@ -1,0 +1,13 @@
+apiVersion: v1        # version required for objects
+kind: Service         # Object type declaration
+metadata:
+  name: node-service
+spec:
+  type: NodePort      # Port Definition type
+  ports:
+   - port: 3050       # some other pod object can access this pod by this port
+     targetPort: 8080  # connecting Pod and Service Objects by port
+     nodePort: 31515   # port accessible to outside world (browser)
+  selector:
+    component: nodeapp 
+

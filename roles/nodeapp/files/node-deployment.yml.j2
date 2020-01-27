@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-deployment
+  labels:
+    component: nodeapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: nodeapp
+  template:
+    metadata:
+      labels:
+        component: nodeapp
+    spec:
+      containers:
+      - name: node-deploymeny
+        image: 74744556/nodeapp:{{ image_id }}
+        ports:
+        - containerPort: 8080
+
